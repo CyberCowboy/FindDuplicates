@@ -1,5 +1,3 @@
-# A bit of awesomeness in five minutes
-# Search directory tree for all duplicate files  
 import os, hashlib
 #rootdir = 'c:\Python Test'
 hashlist = {}  # content signature -> list of filenames
@@ -13,8 +11,13 @@ def get_hash(rootdir):
 	    for filename in files:
 	        fullname = os.path.join(path, filename)
 	        with open(fullname) as f:
-	            d = f.read()         
-	            h = hashlib.md5(d).hexdigest()         
+	            md5 = hashlib.md5()
+	            while True:
+	            	d = f.read(4096)
+            		if not d:
+            			break
+        			md5.update(d)
+	            h = md5.hexdigest()         
 	            filelist = hashlist.setdefault(h, [])         
 	            filelist.append(fullname)   
 
