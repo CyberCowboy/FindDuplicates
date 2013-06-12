@@ -1,3 +1,6 @@
+''' a python 2.7 program that when given a directory tree compares all files under it for duplicates and outputs
+them to a text file'''
+
 import os, hashlib
 hashdict = {}  # content signature -> list of filenames
 dups = []
