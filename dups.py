@@ -8,7 +8,8 @@ dups = []
 def Dups(rootdir):
     """goes through directory tree, compares md5 hash of all files,
     combines files with same hash value into list in hashmap directory"""
-    for path, dirs, files in os.walk(rootdir):
+    unirootdir = unicode(rootdir)
+    for path, dirs, files in os.walk(unirootdir):
         #this section goes through the given directory, and all subdirectories/files below
         #as part of a loop reading them in
         for filename in files:
@@ -25,8 +26,8 @@ def Dups(rootdir):
                     if not d:
                         break
                     md5.update(d)
-                h = md5.hexdigest()         
-                filelist = hashdict.setdefault(h, [])         
+                h = md5.hexdigest()
+                filelist = hashdict.setdefault(h, [])
                 filelist.append(fullname)   
 
     for currenthash in hashdict.itervalues():
@@ -36,8 +37,6 @@ def Dups(rootdir):
             dups.append(currenthash)
     output = open('duplicates.txt','w')
     for x in dups:
-        print x
         output.write(str(x))
         output.write('\n')
-    #output.write(str(dups))
     output.close()
