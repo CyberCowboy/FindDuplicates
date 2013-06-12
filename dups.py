@@ -1,11 +1,10 @@
 import os, hashlib
-#rootdir = 'c:\Python Test'
-hashlist = {}  # content signature -> list of filenames
+hashdict = {}  # content signature -> list of filenames
 dups = []
 
-def get_hash(rootdir):
-#   """goes through directory tree, compares md5 hash of all files,
-#   combines files with same hash value into list in hashmap directory"""
+def Dups(rootdir):
+    """goes through directory tree, compares md5 hash of all files,
+    combines files with same hash value into list in hashmap directory"""
     for path, dirs, files in os.walk(rootdir):
         #this section goes through the given directory, and all subdirectories/files below
         #as part of a loop reading them in
@@ -24,15 +23,18 @@ def get_hash(rootdir):
                         break
                     md5.update(d)
                 h = md5.hexdigest()         
-                filelist = hashlist.setdefault(h, [])         
+                filelist = hashdict.setdefault(h, [])         
                 filelist.append(fullname)   
 
-    for x in hashlist:
-        currenthash = hashlist[x]
+    for currenthash in hashdict.itervalues():
         #goes through and if has has more than one file listed with it
         #considers it a duplicate and adds it to the output list
         if len(currenthash) > 1:
             dups.append(currenthash)
     output = open('duplicates.txt','w')
-    output.write(str(dups))
+    for x in dups:
+        print x
+        output.write(str(x))
+        output.write('\n')
+    #output.write(str(dups))
     output.close()
