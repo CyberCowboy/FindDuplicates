@@ -5,11 +5,10 @@ import os, hashlib
 hashdict = {}  # content signature -> list of filenames
 dups = []
 
-def Dups(rootdir):
+def dupe(rootdir):
     """goes through directory tree, compares md5 hash of all files,
     combines files with same hash value into list in hashmap directory"""
-    unirootdir = unicode(rootdir)
-    for path, dirs, files in os.walk(unirootdir):
+    for path, dirs, files in os.walk(unicode(rootdir)):
         #this section goes through the given directory, and all subdirectories/files below
         #as part of a loop reading them in
         for filename in files:
@@ -38,5 +37,8 @@ def Dups(rootdir):
     output = open('duplicates.txt','w')
     for x in dups:
         output.write(str(x))
-        output.write('\n')
+        output.write("\n")
     output.close()
+
+    if __name__ == "__main__":
+        import sys
